@@ -112,11 +112,13 @@ Cilj: Uporabniku omogoči nepozabno, avtentično in elegantno potovanje.
 
     # Stara metoda v stari verziji knjižnice
     response = openai.ChatCompletion.create(
-        model="gpt-3.5-turbo",
+        model="gpt-4o",
         messages=[
-            {"role": "system", "content": "You are TripVaults travel planner. Create detailed, personalized travel guides in the requested language with comprehensive local insights and authentic experiences."},
+            {"role": "system", "content": "You are TripVaults travel planner, an expert in creating comprehensive, personalized travel guides. You have deep knowledge of destinations worldwide, local cultures, hidden gems, and authentic experiences. Create detailed, engaging travel guides in the requested language that provide genuine local insights and unforgettable experiences. Focus on quality over quantity, ensuring each recommendation is carefully curated and valuable."},
             {"role": "user", "content": prompt}
-        ]
+        ],
+        max_tokens=4000,
+        temperature=0.7
     )
 
     plan = response.choices[0].message.content
