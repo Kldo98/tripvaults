@@ -17,7 +17,7 @@ else:
 
 # Inicializiraj Flask app
 app = Flask(__name__)
-CORS(app, resources={r"/api/*": {"origins": "*", "methods": ["GET", "POST", "OPTIONS"], "allow_headers": ["Content-Type"]}})
+CORS(app)
 
 @app.route("/")
 def health_check():
@@ -122,7 +122,7 @@ Cilj: Uporabniku omogoči nepozabno, avtentično in elegantno potovanje.
     )
 
     plan = response.choices[0].message.content
-    return jsonify({"plan": plan}), 200
+    return jsonify({"plan": plan})
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
