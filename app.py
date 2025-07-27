@@ -17,7 +17,7 @@ else:
 
 # Inicializiraj Flask app
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["http://localhost:8000", "http://localhost:3000", "https://tripvaults.com", "https://www.tripvaults.com", "*"])
 
 @app.route("/")
 def health_check():
@@ -26,10 +26,26 @@ def health_check():
     else:
         return jsonify({"status": "TripVaults API is running!", "message": "Backend is ready", "api_key": "not_set"})
 
+@app.route("/api/travel-plan", methods=["OPTIONS"])
+def travel_plan_options():
+    response_headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    }
+    return "", 200, response_headers
+
 @app.route("/api/travel-plan", methods=["POST"])
 def travel_plan():
+    # Add CORS headers for production
+    response_headers = {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type'
+    }
+    
     if not api_key:
-        return jsonify({"error": "OpenAI API key not configured"}), 500
+        return jsonify({"error": "OpenAI API key not configured"}), 500, response_headers
     
     data = request.json
     destination = data.get("destination")
@@ -122,7 +138,7 @@ Cilj: Uporabniku omogoči nepozabno, avtentično in elegantno potovanje.
     )
 
     plan = response.choices[0].message.content
-    return jsonify({"plan": plan})
+    return jsonify({"plan": plan}), 200, response_headers
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
