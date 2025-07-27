@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>TripVaults Plan Generator</title>
+</head>
+<body>
+  <h1>Ustvari potovalni plan</h1>
+  <form id="trip-form">
+    <label>Destinacija: <input type="text" name="destination" required /></label><br />
+    <label>Št. oseb: <input type="number" name="people" min="1" required /></label><br />
+    <label>Interesi:
+      <select name="interests" multiple required>
+        <option value="sport">Šport</option>
+        <option value="party">Zabava</option>
+        <option value="chill">Sprostitev</option>
+        <option value="culture">Kultura</option>
+        <option value="food">Hrana</option>
+      </select>
+    </label><br />
+    <button type="submit">Generiraj plan</button>
+  </form>
+
+  <h2>Rezultat:</h2>
+  <pre id="output"></pre>
+
+  <script src="/static/script.js"></script>
+</body>
+</html>

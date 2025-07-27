@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TripVaults - Your AI Guide for Carefree Travel</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.29/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-globe-americas"></i>
+                <span>TripVaults</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#how-it-works">How It Works</a></li>
+                <li><a href="#planner">AI Planner</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-line">Your AI Guide for</span>
+                    <span class="title-line">Carefree Travel</span>
+                </h1>
+                <p class="hero-subtitle">Let artificial intelligence create your perfect vacation plan. No stress, no planning - just pure enjoyment.</p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="scrollToSection('planner')">
+                        <i class="fas fa-magic"></i>
+                        Start AI Planning
+                    </button>
+                    <button class="btn btn-secondary" onclick="scrollToSection('how-it-works')">
+                        <i class="fas fa-play"></i>
+                        See How It Works
+                    </button>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="ai-illustration">
+                    <div class="ai-brain">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="travel-elements">
+                        <div class="element element-1">
+                            <i class="fas fa-map-marked-alt"></i>
+                            <span>Smart Routes</span>
+                        </div>
+                        <div class="element element-2">
+                            <i class="fas fa-gem"></i>
+                            <span>Hidden Gems</span>
+                        </div>
+                        <div class="element element-3">
+                            <i class="fas fa-percentage"></i>
+                            <span>Best Deals</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How Our AI Creates Your Perfect Trip</h2>
+            <p class="section-subtitle">From your preferences to a complete travel plan in minutes</p>
+            
+            <div class="process-timeline">
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Choose Your Group</h3>
+                        <p>Select the number of travelers and their preferences. Whether it's a romantic getaway, family vacation, or adventure with friends.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Define Your Style</h3>
+                        <p>Tell us what you love: adventure sports, nightlife, relaxation, culture, food, or a mix of everything. Our AI understands your vibe.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>AI Time Organization</h3>
+                        <p>Our AI creates a perfect daily schedule, optimizing your time for maximum enjoyment and minimum stress.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Direct Booking Links</h3>
+                        <p>Get instant links to hotels, activities, and restaurants. No more searching - everything is ready to book.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Hidden Gems Discovery</h3>
+                        <p>Discover secret spots that locals love but tourists miss. Authentic experiences that make your trip unforgettable.</p>
+                    </div>
+                </div>
+                
+                <div class="process-step">
+                    <div class="step-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <div class="step-content">
+                        <h3>Exclusive Deals</h3>
+                        <p>Our AI finds the best discounts, special offers, and exclusive deals to save you money on your dream vacation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Planner Section -->
+    <section id="planner" class="planner">
+        <div class="container">
+            <h2 class="section-title">Create Your AI Travel Plan</h2>
+            <p class="section-subtitle">Answer a few questions and let our AI craft your perfect journey</p>
+            
+            <div class="planner-container">
+                <div class="planner-form">
+                    <div class="form-section">
+                        <h3><i class="fas fa-users"></i> Travel Group</h3>
+                        <div class="form-group">
+                            <label for="travelers">Number of Travelers</label>
+                            <select id="travelers">
+                                <option value="1">1 Person</option>
+                                <option value="2">2 People</option>
+                                <option value="3">3 People</option>
+                                <option value="4">4 People</option>
+                                <option value="5+">5+ People</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="group-type">Group Type</label>
+                            <select id="group-type">
+                                <option value="couple">Couple</option>
+                                <option value="family">Family</option>
+                                <option value="friends">Friends</option>
+                                <option value="solo">Solo Traveler</option>
+                                <option value="business">Business</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Destination & Dates</h3>
+                        <div class="form-group">
+                            <label for="destination">Where do you want to go?</label>
+                            <input type="text" id="destination" placeholder="e.g. Paris, France">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="start-date">Departure Date</label>
+                                <input type="date" id="start-date">
+                            </div>
+                            <div class="form-group">
+                                <label for="end-date">Return Date</label>
+                                <input type="date" id="end-date">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-heart"></i> Travel Style</h3>
+                        <div class="style-grid">
+                            <label class="style-option">
+                                <input type="checkbox" value="adventure">
+                                <div class="style-card">
+                                    <i class="fas fa-mountain"></i>
+                                    <span>Adventure</span>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="checkbox" value="relaxation">
+                                <div class="style-card">
+                                    <i class="fas fa-umbrella-beach"></i>
+                                    <span>Relaxation</span>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="checkbox" value="culture">
+                                <div class="style-card">
+                                    <i class="fas fa-landmark"></i>
+                                    <span>Culture</span>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="checkbox" value="food">
+                                <div class="style-card">
+                                    <i class="fas fa-utensils"></i>
+                                    <span>Food & Wine</span>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="checkbox" value="nightlife">
+                                <div class="style-card">
+                                    <i class="fas fa-moon"></i>
+                                    <span>Nightlife</span>
+                                </div>
+                            </label>
+                            <label class="style-option">
+                                <input type="checkbox" value="shopping">
+                                <div class="style-card">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <span>Shopping</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3><i class="fas fa-euro-sign"></i> Budget</h3>
+                        <div class="budget-options">
+                            <label class="budget-option">
+                                <input type="radio" name="budget" value="budget">
+                                <div class="budget-card">
+                                    <h4>Budget</h4>
+                                    <p>Up to 100€/day</p>
+                                </div>
+                            </label>
+                            <label class="budget-option">
+                                <input type="radio" name="budget" value="mid" checked>
+                                <div class="budget-card">
+                                    <h4>Mid-Range</h4>
+                                    <p>100-300€/day</p>
+                                </div>
+                            </label>
+                            <label class="budget-option">
+                                <input type="radio" name="budget" value="luxury">
+                                <div class="budget-card">
+                                    <h4>Luxury</h4>
+                                    <p>300€+/day</p>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary btn-large" onclick="generatePlan()">
+                        <i class="fas fa-magic"></i>
+                        Create My AI Travel Plan
+                    </button>
+                </div>
+                
+                <div class="planner-result" id="planner-result">
+                    <div class="result-placeholder">
+                        <i class="fas fa-route"></i>
+                        <h3>Your AI travel plan will be created here</h3>
+                        <p>Fill out the form and click "Create My AI Travel Plan"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <h2 class="section-title">Why Choose TripVaults AI?</h2>
+            <p class="section-subtitle">Experience travel planning like never before</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Smart AI Planning</h3>
+                    <p>Our advanced AI analyzes thousands of travel patterns to create the perfect itinerary for your preferences.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3>Hidden Gems</h3>
+                    <p>Discover secret spots and local favorites that most tourists never find, creating authentic experiences.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h3>Best Deals</h3>
+                    <p>Our AI constantly searches for the best prices, discounts, and exclusive offers to save you money.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Time Optimization</h3>
+                    <p>Smart scheduling ensures you make the most of every moment, with perfect timing for all activities.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-link"></i>
+                    </div>
+                    <h3>Direct Booking</h3>
+                    <p>One-click booking for hotels, activities, and restaurants - no more searching through multiple websites.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Mobile Ready</h3>
+                    <p>Access your travel plan anywhere, anytime. Perfect for on-the-go travelers who need flexibility.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="about-content">
+                <div class="about-text">
+                    <h2 class="section-title">About TripVaults</h2>
+                    <p>We believe travel should be effortless and enjoyable. That's why we've created the world's most intelligent travel planning AI.</p>
+                    <p>Our technology combines machine learning with real travel expertise to create personalized experiences that match your unique style and preferences.</p>
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <div class="stat-number">50,000+</div>
+                            <div class="stat-label">Happy Travelers</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">200+</div>
+                            <div class="stat-label">Destinations</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">95%</div>
+                            <div class="stat-label">Satisfaction Rate</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="footer-logo">
+                        <i class="fas fa-globe-americas"></i>
+                        <span>TripVaults</span>
+                    </div>
+                    <p>Your AI guide to carefree travel around the world.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Features</h4>
+                    <ul>
+                        <li><a href="#">AI Travel Planning</a></li>
+                        <li><a href="#">Hidden Gems</a></li>
+                        <li><a href="#">Best Deals</a></li>
+                        <li><a href="#">Direct Booking</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 TripVaults. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html> 
