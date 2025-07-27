@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TripVaults - Your AI Guide for Carefree Travel</title>
+    <link rel="icon" type="image/png" href="images/tv_favicon.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -15,7 +16,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="nav-logo">
-                <i class="fas fa-globe-americas"></i>
+                <img src="images/tv_logo.png" alt="TripVaults Logo" class="logo-img">
                 <span>TripVaults</span>
             </div>
             <ul class="nav-menu">
@@ -156,43 +157,66 @@
             <div class="planner-container">
                 <div class="planner-form">
                     <div class="form-section">
-                        <h3><i class="fas fa-users"></i> Travel Group</h3>
-                        <div class="form-group">
-                            <label for="travelers">Number of Travelers</label>
-                            <select id="travelers">
-                                <option value="1">1 Person</option>
-                                <option value="2">2 People</option>
-                                <option value="3">3 People</option>
-                                <option value="4">4 People</option>
-                                <option value="5+">5+ People</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="group-type">Group Type</label>
-                            <select id="group-type">
-                                <option value="couple">Couple</option>
-                                <option value="family">Family</option>
-                                <option value="friends">Friends</option>
-                                <option value="solo">Solo Traveler</option>
-                                <option value="business">Business</option>
-                            </select>
+                        <h4><i class="fas fa-users"></i> Travel Group</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="travelers">Number of Travelers</label>
+                                <select id="travelers" required>
+                                    <option value="">Select...</option>
+                                    <option value="1">1 Person</option>
+                                    <option value="2">2 People</option>
+                                    <option value="3">3 People</option>
+                                    <option value="4">4 People</option>
+                                    <option value="5">5 People</option>
+                                    <option value="6+">6+ People</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="group-type">Group Type</label>
+                                <select id="group-type" required>
+                                    <option value="">Select...</option>
+                                    <option value="couple">Couple</option>
+                                    <option value="family">Family</option>
+                                    <option value="friends">Friends</option>
+                                    <option value="solo">Solo Traveler</option>
+                                    <option value="business">Business</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-section">
-                        <h3><i class="fas fa-map-marker-alt"></i> Destination & Dates</h3>
-                        <div class="form-group">
-                            <label for="destination">Where do you want to go?</label>
-                            <input type="text" id="destination" placeholder="e.g. Paris, France">
+                        <h4><i class="fas fa-map-marker-alt"></i> Destination & Dates</h4>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="destination">Where do you want to go?</label>
+                                <input type="text" id="destination" placeholder="e.g. Paris, France" required>
+                            </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="start-date">Departure Date</label>
-                                <input type="date" id="start-date">
+                                <input type="date" id="start-date" required>
                             </div>
                             <div class="form-group">
                                 <label for="end-date">Return Date</label>
-                                <input type="date" id="end-date">
+                                <input type="date" id="end-date" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="language">Guide Language</label>
+                                <select id="language" required>
+                                    <option value="">Select language...</option>
+                                    <option value="English">English</option>
+                                    <option value="Slovenian">Slovenian</option>
+                                    <option value="German">German</option>
+                                    <option value="French">French</option>
+                                    <option value="Spanish">Spanish</option>
+                                    <option value="Italian">Italian</option>
+                                    <option value="Croatian">Croatian</option>
+                                    <option value="Serbian">Serbian</option>
+                                </select>
                             </div>
                         </div>
                     </div>

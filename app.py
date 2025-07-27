@@ -39,23 +39,23 @@ def travel_plan():
     startDate = data.get("startDate", "")
     endDate = data.get("endDate", "")
     budget = data.get("budget", "mid")
+    language = data.get("language", "English")
 
-    if not (destination and people and interests):
+    if not (destination and people and interests and language):
         return jsonify({"error": "Missing required data"}), 400
 
     # Calculate trip duration
-    duration_text = ""
+    days = 5
     if startDate and endDate:
         try:
             from datetime import datetime
             start = datetime.strptime(startDate, "%Y-%m-%d")
             end = datetime.strptime(endDate, "%Y-%m-%d")
             days = (end - start).days
-            duration_text = f" for {days} days"
+            if days <= 0:
+                days = 5
         except:
-            duration_text = " for 5 days"
-    else:
-        duration_text = " for 5 days"
+            days = 5
 
     budget_text = {
         "budget": "budget-friendly",
@@ -64,43 +64,57 @@ def travel_plan():
     }.get(budget, "mid-range")
 
     prompt = f"""
-    Create a detailed travel plan{duration_text} for {people} {groupType} traveling to {destination}.
-    
-    Travel preferences:
-    - Interests: {', '.join(interests)}
-    - Budget level: {budget_text}
-    - Group type: {groupType}
-    
-    Please provide a comprehensive travel plan that includes:
-    1. Daily schedule (morning, afternoon, evening)
-    2. Recommended activities based on their interests
-    3. Hidden gems and local recommendations
-    4. Restaurant and dining suggestions
-    5. Transportation tips
-    6. Accommodation recommendations
-    7. Photo opportunities
-    8. Booking links where applicable
-    
-    Format the response with clear day-by-day structure using markdown formatting:
-    **Day 1:**
-    *Morning:*
-    - Activity 1
-    - Activity 2
-    *Afternoon:*
-    - Activity 1
-    - Activity 2
-    *Evening:*
-    - Activity 1
-    - Activity 2
-    
-    Make it engaging and personalized for their interests and budget level.
-    """
+Ustvari ekskluziven, personaliziran in podroben {days}-dnevni potovalni vodič za {people} osebo/oseb, ki potuje v {destination}.
+Celoten vodič naj bo napisan v jeziku: **{language}** (izbran s strani uporabnika).
+
+🟢 Interesi potnikov: {', '.join(interests)}.
+
+🎯 Navodila:
+- Vključuj **overview** destinacije (kulturni značaj, občutek kraja).
+- Na začetku napiši tudi **"Suggested Stay"** – koliko dni priporočaš za to destinacijo.
+- Vsak dan razdeli na: **Morning**, **Afternoon**, **Evening**.
+- Aktivnosti naj bodo usklajene z interesi uporabnika.
+- Označi vsak dan z "tipom dneva" (npr. kulturni, naravni, kulinarični, družinski).
+- Za vsak del dneva predlagaj konkretne aktivnosti z opisom **kaj, zakaj in kdaj iti**.
+
+🍽️ Vključuj vsak dan:
+- 1 lokalno restavracijo in 1 fine dining restavracijo z:
+    - imenom,
+    - točnim naslovom,
+    - Google oceno (če obstaja),
+    - opisom + vsaj 1 must-try jedjo.
+
+📍 Vsak dan naj vsebuje:
+- vsaj en **hidden gem** (s podrobnim opisom zgodbe ali posebnosti),
+- **lokalne nasvete** (kdaj iti, kako se izogniti množici, lokalni bonton).
+
+🌙 Vključuj **večerne aktivnosti**, kot so:
+- lokalne predstave, panoramske točke, rooftop bari, cruise izleti ipd.
+
+📱 Na koncu vodiča dodaj sekcijo:
+**Recommended Apps for {destination}** – 4–6 koristnih aplikacij (lokalni prevozi, navigacija, hrana, valutni pretvornik, ipd.).
+
+🍛 Dodaj še sekcijo:
+**Must-Try Local Foods in {destination}** – 5 najbolj značilnih jedi kraja z opisi.
+
+🗣️ Na koncu dodaj sekcijo:
+**Useful Local Phrases** – fraze v lokalnem jeziku destinacije s prevodi v {language}.
+Naj jih bo vsaj 5–10 (npr. pozdrav, zahvala, naročilo hrane, vprašanje za pot…).
+
+✍️ Slog pisanja:
+- Topel, profesionalen in navdihujoč – kot da vodič piše lokalni poznavalec.
+- Vključi opise občutkov, ambientov in posebnosti – naj bo vodnik doživetje, ne le seznam.
+- Ne ponavljaj aktivnosti med dnevi.
+- Naj vodič odraža **TripVaults** vrednote: globlja izkušnja, lokalno, unikatno, pametno raziskovanje.
+
+Cilj: Uporabniku omogoči nepozabno, avtentično in elegantno potovanje.
+"""
 
     # Stara metoda v stari verziji knjižnice
     response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
-            {"role": "system", "content": "You are TripVaults travel planner. Create detailed, personalized travel plans in English with clear day-by-day structure."},
+            {"role": "system", "content": "You are TripVaults travel planner. Create detailed, personalized travel guides in the requested language with comprehensive local insights and authentic experiences."},
             {"role": "user", "content": prompt}
         ]
     )

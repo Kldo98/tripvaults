@@ -80,13 +80,14 @@ async function generatePlan() {
     const groupType = document.getElementById('group-type').value;
     const startDate = document.getElementById('start-date').value;
     const endDate = document.getElementById('end-date').value;
+    const language = document.getElementById('language').value;
     const selectedStyles = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
         .map(cb => cb.value);
     const budget = document.querySelector('input[name="budget"]:checked')?.value;
     
     // Validation
-    if (!destination || !travelers || selectedStyles.length === 0) {
-        showNotification('Please fill in destination, number of travelers, and select at least one travel style.', 'error');
+    if (!destination || !travelers || !groupType || !language || selectedStyles.length === 0) {
+        showNotification('Please fill in destination, number of travelers, group type, language, and select at least one travel style.', 'error');
         return;
     }
     
@@ -121,7 +122,7 @@ async function generatePlan() {
         
         // Simulate API delay and response for testing
         setTimeout(() => {
-            const testResponse = generateTestAPIResponse(destination, travelers, groupType, selectedStyles, budget);
+            const testResponse = generateTestAPIResponse(destination, travelers, groupType, selectedStyles, budget, language);
             displayAIPlanFromAPI(testResponse, {
                 destination,
                 people: travelers,
@@ -129,7 +130,8 @@ async function generatePlan() {
                 groupType,
                 startDate,
                 endDate,
-                budget
+                budget,
+                language
             });
         }, 2000);
         return;
@@ -152,7 +154,8 @@ async function generatePlan() {
             groupType: groupType,
             startDate: startDate,
             endDate: endDate,
-            budget: budget
+            budget: budget,
+            language: language
         };
         
         console.log('Sending API request:', requestData);
@@ -226,7 +229,8 @@ async function generatePlan() {
             groupType: groupType,
             startDate: startDate,
             endDate: endDate,
-            budget: budget
+            budget: budget,
+            language: language
         };
         
         const plan = generateLocalPlan(requestData);
@@ -712,6 +716,7 @@ function generateTravelPlanPDF() {
     const selectedStyles = Array.from(document.querySelectorAll('input[type="checkbox"]:checked'))
         .map(cb => cb.value);
     const budget = document.querySelector('input[name="budget"]:checked')?.value;
+    const language = document.getElementById('language').value;
     
     // Calculate trip duration
     const start = new Date(startDate);
@@ -738,7 +743,8 @@ function generateTravelPlanPDF() {
         endDate,
         days,
         selectedStyles,
-        budget
+        budget,
+        language
     });
     
     // Check if we need a new page
@@ -797,7 +803,8 @@ function createTripOverview(doc, margin, yPosition, data) {
         ['Duration:', `${data.days} days`],
         ['Dates:', `${data.startDate} - ${data.endDate}`],
         ['Travel Styles:', data.selectedStyles.join(', ')],
-        ['Budget Level:', data.budget]
+        ['Budget Level:', data.budget],
+        ['Language:', data.language]
     ];
     
     doc.setFontSize(11);
@@ -1293,29 +1300,38 @@ document.addEventListener('DOMContentLoaded', function() {
 }); 
 
 // Test API response generator
-function generateTestAPIResponse(destination, travelers, groupType, selectedStyles, budget) {
+function generateTestAPIResponse(destination, travelers, groupType, selectedStyles, budget, language) {
     const styles = selectedStyles.join(', ');
     const budgetText = budget === 'budget' ? 'Budget' : budget === 'mid' ? 'Mid-Range' : 'Luxury';
     
-    return `**Day 1:**
+    return `**${language} Travel Guide for ${destination}**
+
+**Suggested Stay:** 5 days recommended for a comprehensive experience.
+
+**Overview:**
+${destination} offers a perfect blend of culture, history, and modern experiences. This vibrant destination caters to all interests and provides authentic local experiences.
+
+**Day 1: Cultural Discovery**
 
 *Morning:*
-- Start your day with a local breakfast at a traditional café
-- Explore the main attractions of ${destination} with a guided walking tour
+- Start your day with a traditional local breakfast at a charming café
+- Explore the main cultural landmarks with a guided walking tour
+- Visit the most iconic historical sites
 
 *Afternoon:*
-- Visit the most popular landmarks and cultural sites
 - Enjoy a traditional lunch at a local restaurant
+- Continue cultural exploration with museum visits
+- Discover local artisan shops and markets
 
 *Evening:*
-- Experience the local nightlife and entertainment scene
-- Dinner at a recommended restaurant based on your ${styles} preferences
+- Experience authentic local cuisine at a recommended restaurant
+- Enjoy evening entertainment and cultural performances
 
-**Day 2:**
+**Day 2: Adventure & Nature**
 
 *Morning:*
-- Early morning activity based on your ${styles} interests
-- Visit local markets and shops
+- Early morning outdoor activities based on your ${styles} interests
+- Visit local markets and explore hidden corners
 
 *Afternoon:*
 - Continue exploring ${destination} with focus on ${styles}
@@ -1325,7 +1341,35 @@ function generateTestAPIResponse(destination, travelers, groupType, selectedStyl
 - Evening entertainment and dining options
 - Relaxation time at your ${budgetText} accommodation
 
-**Day 3:**
+**Day 3: Culinary & Local Life**
+
+*Morning:*
+- Local breakfast and food market exploration
+- Cooking class or food tour experience
+
+*Afternoon:*
+- Traditional lunch at a local favorite
+- Explore local neighborhoods and hidden gems
+
+*Evening:*
+- Fine dining experience at a recommended restaurant
+- Evening stroll through local districts
+
+**Day 4: Relaxation & Wellness**
+
+*Morning:*
+- Sunrise activities and wellness experiences
+- Spa treatments or outdoor relaxation
+
+*Afternoon:*
+- Continue with relaxation and wellness activities
+- Local wellness and cultural experiences
+
+*Evening:*
+- Evening spa or peaceful dinner
+- Reflection on your amazing trip
+
+**Day 5: Final Day**
 
 *Morning:*
 - Final day activities in ${destination}
@@ -1339,5 +1383,27 @@ function generateTestAPIResponse(destination, travelers, groupType, selectedStyl
 - Final evening in ${destination}
 - Reflection on your amazing trip
 
-This ${budgetText} travel plan for ${travelers} ${groupType} focuses on ${styles} activities in ${destination}. Enjoy your trip!`;
+**Recommended Apps for ${destination}:**
+- Local transport app
+- Navigation app
+- Food delivery app
+- Currency converter
+- Language translation app
+- Local events app
+
+**Must-Try Local Foods in ${destination}:**
+- Traditional local dish 1
+- Signature local dish 2
+- Regional specialty 3
+- Local dessert 4
+- Traditional beverage 5
+
+**Useful Local Phrases:**
+- Hello: Local greeting
+- Thank you: Local thanks
+- How much?: Local price question
+- Where is...?: Local direction question
+- Delicious: Local food compliment
+
+This ${budgetText} travel plan for ${travelers} ${groupType} focuses on ${styles} activities in ${destination}. Enjoy your authentic and memorable trip!`;
 } 
