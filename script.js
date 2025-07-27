@@ -158,9 +158,7 @@ async function generatePlan() {
         console.log('Sending API request:', requestData);
         
         // Determine API URL based on environment
-        const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
-            ? 'http://localhost:5000/api/travel-plan'  // Flask backend (local development)
-            : 'https://tripvaults.onrender.com/api/travel-plan';  // Production backend (Render)
+        const apiUrl = 'https://tripvaults.onrender.com/api/travel-plan';  // Always use Render API
         
         console.log('Using API URL:', apiUrl);
         
