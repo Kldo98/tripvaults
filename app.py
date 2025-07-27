@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify, render_template
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 from openai import OpenAI
 import os
@@ -15,8 +15,8 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route("/")
-def index():
-    return render_template("index.html")
+def health_check():
+    return jsonify({"status": "TripVaults API is running!", "message": "Backend is ready"})
 
 @app.route("/api/travel-plan", methods=["POST"])
 def travel_plan():
