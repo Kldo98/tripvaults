@@ -242,41 +242,109 @@ async function generatePlan() {
 function displayAIPlanFromAPI(planText, requestData) {
     const resultContainer = document.getElementById('planner-result');
     
-    const planHTML = `
-        <div class="travel-plan">
-            <div class="plan-header">
-                <h3><i class="fas fa-brain"></i> AI Travel Plan for ${requestData.destination}</h3>
-                <p class="plan-dates">${requestData.startDate} - ${requestData.endDate}</p>
-                <p class="plan-group">${requestData.people} ${requestData.groupType} • ${requestData.budget} Budget</p>
-            </div>
-            
-            <div class="plan-content">
-                <div class="ai-plan-text">
-                    ${planText.replace(/\n/g, '<br>')}
+    // Split the plan into sections for pagination
+    const sections = splitPlanIntoSections(planText);
+    
+    let currentSection = 0;
+    
+    function displaySection(sectionIndex) {
+        const section = sections[sectionIndex];
+        const isLastSection = sectionIndex === sections.length - 1;
+        
+        const planHTML = `
+            <div class="travel-plan">
+                <div class="plan-header">
+                    <h3><i class="fas fa-brain"></i> AI Travel Plan for ${requestData.destination}</h3>
+                    <p class="plan-dates">${requestData.startDate} - ${requestData.endDate}</p>
+                    <p class="plan-group">${requestData.people} ${requestData.groupType} • ${requestData.budget} Budget</p>
+                    <p class="plan-language">Guide Language: ${requestData.language}</p>
+                </div>
+                
+                <div class="plan-content">
+                    <div class="ai-plan-text">
+                        ${section}
+                    </div>
+                </div>
+                
+                <div class="plan-navigation">
+                    ${sectionIndex > 0 ? `<button class="btn btn-secondary" onclick="displaySection(${sectionIndex - 1})">
+                        <i class="fas fa-chevron-left"></i> Previous
+                    </button>` : ''}
+                    
+                    <span class="page-indicator">Page ${sectionIndex + 1} of ${sections.length}</span>
+                    
+                    ${!isLastSection ? `<button class="btn btn-primary" onclick="displaySection(${sectionIndex + 1})">
+                        Continue Reading <i class="fas fa-chevron-right"></i>
+                    </button>` : ''}
+                </div>
+                
+                <div class="plan-actions">
+                    <button class="btn btn-primary" onclick="generateTravelPlanPDF()">
+                        <i class="fas fa-file-pdf"></i> Download PDF
+                    </button>
+                    <button class="btn btn-secondary" onclick="sharePlan()">
+                        <i class="fas fa-share"></i> Share
+                    </button>
                 </div>
             </div>
-            
-            <div class="plan-actions">
-                <button class="btn btn-primary" onclick="generateTravelPlanPDF()">
-                    <i class="fas fa-file-pdf"></i> Download PDF
-                </button>
-                <button class="btn btn-secondary" onclick="sharePlan()">
-                    <i class="fas fa-share"></i> Share
-                </button>
-            </div>
-        </div>
-    `;
+        `;
+        
+        resultContainer.innerHTML = planHTML;
+        
+        // Add animation
+        resultContainer.style.opacity = '0';
+        resultContainer.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+            resultContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            resultContainer.style.opacity = '1';
+            resultContainer.style.transform = 'translateY(0)';
+        }, 100);
+    }
     
-    resultContainer.innerHTML = planHTML;
+    // Display first section
+    displaySection(0);
     
-    // Add animation
-    resultContainer.style.opacity = '0';
-    resultContainer.style.transform = 'translateY(20px)';
-    setTimeout(() => {
-        resultContainer.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-        resultContainer.style.opacity = '1';
-        resultContainer.style.transform = 'translateY(0)';
-    }, 100);
+    // Make displaySection globally available
+    window.displaySection = displaySection;
+}
+
+// Function to split long plan into sections
+function splitPlanIntoSections(planText) {
+    const sections = [];
+    const lines = planText.split('\n');
+    let currentSection = '';
+    let dayCount = 0;
+    
+    for (let i = 0; i < lines.length; i++) {
+        const line = lines[i];
+        currentSection += line + '\n';
+        
+        // Check if this is a new day (starts with **Day)
+        if (line.trim().startsWith('**Day') && dayCount > 0) {
+            // Start a new section after every 2-3 days
+            if (dayCount % 3 === 0) {
+                sections.push(currentSection.trim());
+                currentSection = '';
+            }
+        }
+        
+        // Count days
+        if (line.trim().startsWith('**Day')) {
+            dayCount++;
+        }
+    }
+    
+    // Add the last section
+    if (currentSection.trim()) {
+        sections.push(currentSection.trim());
+    }
+    
+    // If no sections were created (short plan), return the whole text
+    if (sections.length === 0) {
+        return [planText];
+    }
+    
+    return sections;
 }
 
 // Local plan generation as fallback
@@ -1114,6 +1182,12 @@ const planStyles = `
             font-size: 0.9rem;
         }
         
+        .plan-language {
+            color: var(--text-gray);
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
         .plan-content {
             margin-bottom: 2rem;
         }
@@ -1238,6 +1312,18 @@ const planStyles = `
         .loading-state h3 {
             margin-bottom: 0.5rem;
             color: var(--text-light);
+        }
+        
+        .plan-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .page-indicator {
+            font-size: 0.9rem;
+            color: var(--text-gray);
         }
         
         @media (max-width: 768px) {
