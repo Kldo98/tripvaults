@@ -160,7 +160,7 @@ async function generatePlan() {
         // Determine API URL based on environment
         const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
             ? 'http://localhost:5000/api/travel-plan'  // Flask backend (local development)
-            : 'https://tripvaults-xxxxx.vercel.app/api/travel-plan';  // Production backend (replace xxxxx with your actual Vercel app ID)
+            : 'https://tripvaults.onrender.com/api/travel-plan';  // Production backend (Render)
         
         console.log('Using API URL:', apiUrl);
         
