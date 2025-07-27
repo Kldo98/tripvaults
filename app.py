@@ -1,19 +1,19 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from openai import OpenAI
+import openai
 import os
 from dotenv import load_dotenv
 
 # Naloži API ključ iz .env datoteke
 load_dotenv()
 
-# Inicializiraj OpenAI client (nova sintaksa)
+# Inicializiraj OpenAI client (stara sintaksa)
 api_key = os.getenv("OPENAI_API_KEY")
 if not api_key:
     print("Warning: OPENAI_API_KEY not set. API calls will fail.")
     client = None
 else:
-    client = OpenAI(api_key=api_key)
+    openai.api_key = api_key
 
 # Inicializiraj Flask app
 app = Flask(__name__)
@@ -21,14 +21,14 @@ CORS(app)
 
 @app.route("/")
 def health_check():
-    if client:
+    if api_key:
         return jsonify({"status": "TripVaults API is running!", "message": "Backend is ready", "api_key": "set"})
     else:
         return jsonify({"status": "TripVaults API is running!", "message": "Backend is ready", "api_key": "not_set"})
 
 @app.route("/api/travel-plan", methods=["POST"])
 def travel_plan():
-    if not client:
+    if not api_key:
         return jsonify({"error": "OpenAI API key not configured"}), 500
     
     data = request.json
@@ -46,8 +46,8 @@ def travel_plan():
     Vključi hidden gems, lokalne nasvete, in če je mogoče tudi linke.
     """
 
-    # Nova metoda v novi verziji knjižnice
-    response = client.chat.completions.create(
+    # Stara metoda v stari verziji knjižnice
+    response = openai.ChatCompletion.create(
         model="gpt-3.5-turbo",
         messages=[
             {"role": "system", "content": "Ti si TripVaults potovalni planer."},
