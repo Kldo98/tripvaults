@@ -104,7 +104,7 @@ async function generatePlan() {
     const resultContainer = document.getElementById('planner-result');
     
     // Check if we're in test mode (no backend available)
-    const isTestMode = !window.location.hostname || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const isTestMode = !window.location.hostname || window.location.protocol === 'file:';
     
     if (isTestMode) {
         resultContainer.innerHTML = `
