@@ -1,3 +1,6 @@
+// TripVaults - AI Travel Planning System
+// Last updated: December 2024
+
 // Smooth scrolling for navigation links
 function scrollToSection(sectionId) {
     const section = document.getElementById(sectionId);
@@ -157,7 +160,7 @@ async function generatePlan() {
         // Determine API URL based on environment
         const apiUrl = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' 
             ? 'http://localhost:5000/api/travel-plan'  // Flask backend (local development)
-            : 'https://your-app.vercel.app/api/travel-plan';  // Production backend (update this URL)
+            : 'https://tripvaults-xxxxx.vercel.app/api/travel-plan';  // Production backend (replace xxxxx with your actual Vercel app ID)
         
         console.log('Using API URL:', apiUrl);
         
