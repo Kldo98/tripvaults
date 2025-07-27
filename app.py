@@ -8,7 +8,12 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Inicializiraj OpenAI client (nova sintaksa)
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+api_key = os.getenv("OPENAI_API_KEY")
+if not api_key:
+    print("Warning: OPENAI_API_KEY not set. API calls will fail.")
+    client = None
+else:
+    client = OpenAI(api_key=api_key)
 
 # Inicializiraj Flask app
 app = Flask(__name__)
@@ -16,10 +21,16 @@ CORS(app)
 
 @app.route("/")
 def health_check():
-    return jsonify({"status": "TripVaults API is running!", "message": "Backend is ready"})
+    if client:
+        return jsonify({"status": "TripVaults API is running!", "message": "Backend is ready", "api_key": "set"})
+    else:
+        return jsonify({"status": "TripVaults API is running!", "message": "Backend is ready", "api_key": "not_set"})
 
 @app.route("/api/travel-plan", methods=["POST"])
 def travel_plan():
+    if not client:
+        return jsonify({"error": "OpenAI API key not configured"}), 500
+    
     data = request.json
     destination = data.get("destination")
     people = data.get("people")
